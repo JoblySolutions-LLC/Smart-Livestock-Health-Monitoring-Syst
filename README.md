@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Smart Livestock Health Monitoring - Starter Repo
 
 This repo contains minimal starter components for ingestion, notification, IoT, and frontend.
@@ -26,3 +27,6 @@ This repo contains minimal starter components for ingestion, notification, IoT, 
    ```
 
 5. Run ESP32 or Python simulator to test data ingestion.
+=======
+# Smart-Livestock-Health-Monitoring-System
+>>>>>>> 7ea58a21d1f3b6fa9b8a4b3bed72dd8de7156e6f
