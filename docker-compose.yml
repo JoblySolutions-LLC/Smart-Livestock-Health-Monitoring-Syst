@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  device-ingestor:
+    build: ./backend/device-ingestor-service
+    ports:
+      - "8080:8080"
+  notification-service:
+    build: ./backend/notification-service
+    ports:
+      - "4000:4000"
+  mqtt:
+    image: eclipse-mosquitto:2.0
+    ports:
+      - "1883:1883"
