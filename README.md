@@ -1,32 +1,54 @@
-<<<<<<< HEAD
-# Smart Livestock Health Monitoring - Starter Repo
+# Smart Livestock Health Monitoring System
 
-This repo contains minimal starter components for ingestion, notification, IoT, and frontend.
+This project is an IoT-based system for monitoring livestock health using ESP32 sensors,
+backend services, and a web dashboard.
 
-## Quick Start
-1. Start MQTT broker and services:
-   ```bash
-   docker-compose up
-   ```
+---
 
-2. Run Device Ingestor Service:
-   ```bash
-   mvn spring-boot:run
-   ```
+##  Features
 
-3. Start Notification Service:
-   ```bash
-   node index.js
-   ```
+- Real-time temperature and heart rate monitoring
+- MQTT-based data ingestion
+- Automated alert notifications
+- Web-based dashboard
+- Dockerized deployment
 
-4. Start Frontend Dashboard:
-   ```bash
-   cd frontend/react-dashboard
-   npm install
-   npm start
-   ```
+---
 
-5. Run ESP32 or Python simulator to test data ingestion.
-=======
-# Smart-Livestock-Health-Monitoring-System
->>>>>>> 7ea58a21d1f3b6fa9b8a4b3bed72dd8de7156e6f
+##  System Architecture
+
+ESP32 → MQTT Broker → Ingestor Service → Database → Notification Service → Dashboard
+
+---
+
+##  Technologies Used
+
+- ESP32 (Arduino)
+- Java Spring Boot
+- Node.js
+- React.js
+- MQTT
+- Docker
+
+---
+
+##  Quick Start
+
+### 1. Start Services (MQTT + Backend)
+
+```bash
+docker-compose up --build
+###2. Run Device Ingestor Service
+cd backend/ingestor
+mvn spring-boot:run
+###3. Start Notification Service
+cd backend/notification
+node index.js
+###4. Start Frontend Dashboard
+cd frontend/react-dashboard
+npm install
+npm start
+
+
+```bash
+docker-compose up --build
