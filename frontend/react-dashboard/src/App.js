@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 
+// Backend URL from environment variable (for deployment support)
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
+
 function App() {
 
   const [data, setData] = useState(null);
@@ -12,23 +15,31 @@ function App() {
     const fetchData = async () => {
       try {
 
-        const response = await fetch("http://localhost:8080/api/v1/device-data/latest");
+        setLoading(true);
+        setError("");
+
+        const response = await fetch(`${API_URL}/api/v1/device-data/latest`);
 
         if (!response.ok) {
-          throw new Error("Failed to fetch data");
+          throw new Error("Failed to fetch data from server");
         }
 
         const result = await response.json();
         setData(result);
-        setLoading(false);
 
       } catch (err) {
-        setError("Server not reachable");
+
+        console.error("API Error:", err);
+        setError("Unable to connect to backend server");
+
+      } finally {
+
         setLoading(false);
+
       }
     };
 
-    // Fetch every 10 seconds
+    // Initial fetch and automatic refresh every 10 seconds
     fetchData();
     const interval = setInterval(fetchData, 10000);
 
@@ -37,9 +48,9 @@ function App() {
   }, []);
 
   return (
-    <div style={{ padding: 20, fontFamily: "Arial" }}>
+    <div style={{ padding: 20, fontFamily: "Arial, sans-serif" }}>
 
-      <h1>🐄 Smart Livestock Health Dashboard</h1>
+      <h1>Smart Livestock Health Dashboard</h1>
 
       <p>Real-time animal health monitoring system</p>
 
@@ -49,22 +60,28 @@ function App() {
 
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-      {data && (
+      {!loading && !error && data && (
 
-        <div style={{
-          border: "1px solid #ccc",
-          padding: 15,
-          width: 300,
-          borderRadius: 8
-        }}>
+        <div
+          style={{
+            border: "1px solid #cccccc",
+            padding: 16,
+            width: 320,
+            borderRadius: 6,
+            backgroundColor: "#f5f5f5"
+          }}
+        >
 
           <h3>Device ID: {data.deviceId}</h3>
 
-          <p>🌡 Temperature: <b>{data.temperature} °C</b></p>
+          <p>Temperature: <strong>{data.temperature} °C</strong></p>
 
-          <p>❤️ Heart Rate: <b>{data.heartRate} BPM</b></p>
+          <p>Heart Rate: <strong>{data.heartRate} BPM</strong></p>
 
-          <p>⏰ Last Updated: {new Date(data.timestamp).toLocaleString()}</p>
+          <p>
+            Last Updated:{" "}
+            {new Date(data.timestamp).toLocaleString()}
+          </p>
 
         </div>
 
@@ -75,3 +92,4 @@ function App() {
 }
 
 export default App;
+
