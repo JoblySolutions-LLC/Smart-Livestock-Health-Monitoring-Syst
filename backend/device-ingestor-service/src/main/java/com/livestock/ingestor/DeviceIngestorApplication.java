@@ -1,35 +1,23 @@
-package com.livestock.ingestor;
+public class AlertService {
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+    private double tempHighCattle  = 39.5;
+    private double tempHighSheep   = 40.0;
+    private int    heartHighCattle = 100;
+    private int    heartHighSheep  = 120;
 
-import javax.annotation.PostConstruct;
-import java.time.Instant;
-
-@SpringBootApplication
-public class DeviceIngestorApplication {
-
-    public static void main(String[] args) {
-
-        System.out.println("====================================");
-        System.out.println(" Smart Livestock Ingestor Starting ");
-        System.out.println("====================================");
-
-        SpringApplication.run(DeviceIngestorApplication.class, args);
-
-        System.out.println("====================================");
-        System.out.println(" Ingestor Service Running Successfully ");
-        System.out.println(" Started at: " + Instant.now());
-        System.out.println("====================================");
+    public void setThresholds(String animal, double tempHigh, int heartHigh) {
+        if (animal.equalsIgnoreCase("cattle")) {
+            this.tempHighCattle  = tempHigh;
+            this.heartHighCattle = heartHigh;
+        } else if (animal.equalsIgnoreCase("sheep")) {
+            this.tempHighSheep  = tempHigh;
+            this.heartHighSheep = heartHigh;
+        }
     }
 
-    // Runs after application startup
-    @PostConstruct
-    public void init() {
-
-        System.out.println("------------------------------------");
-        System.out.println(" Device Ingestor Initialized ");
-        System.out.println(" Ready to receive IoT data ");
-        System.out.println("------------------------------------");
+    public boolean isAnimalUnhealthy(String animal, double temp, int heartRate) {
+        double tMax = animal.equalsIgnoreCase("sheep") ? tempHighSheep : tempHighCattle;
+        int    hMax = animal.equalsIgnoreCase("sheep") ? heartHighSheep : heartHighCattle;
+        return temp > tMax || heartRate > hMax;
     }
 }
