@@ -1,17 +1,23 @@
-{
-  "name": "react-dashboard",
-  "version": "0.1.1",
-  "private": true,
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "axios": "^1.6.0"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  }
+const STATUS_COLORS = {
+  healthy:  { bg: '#d4edda', text: '#155724', label: 'Healthy'  },
+  warning:  { bg: '#fff3cd', text: '#856404', label: 'Warning'  },
+  critical: { bg: '#f8d7da', text: '#721c24', label: 'Critical' },
+};
+
+export default function HealthCard({ animal }) {
+  const status = animal.heartRate > 110 ? 'critical'
+               : animal.temp      > 39.5 ? 'warning'
+               : 'healthy';
+  const { bg, text, label } = STATUS_COLORS[status];
+
+  return (
+    <div className="health-card">
+      <h3>{animal.name} ({animal.type})</h3>
+      <p>Temperature : {animal.temp} C</p>
+      <p>Heart Rate  : {animal.heartRate} bpm</p>
+      <span style={{ background: bg, color: text, padding: '4px 10px', borderRadius: 12 }}>
+        {label}
+      </span>
+    </div>
+  );
 }
